@@ -1,3 +1,7 @@
-def test_one_plus_one_is_two():
-    "Check that one and one are indeed two."
-    assert 1 + 1 == 2
+from ..random_password_generator import random_password_generator
+
+
+def test_length_of_random_password():
+    n = 10
+    password_len = len(random_password_generator(n))
+    assert n == password_len
