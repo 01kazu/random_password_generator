@@ -3,13 +3,50 @@ import string
 import secrets
 
 
+def str_insert(string: str, pos: int, characters: str) -> str:
+    """
+    Inserts character into a string.
+
+    Parameters
+    ----------
+
+    string: str
+        The string that would be inserted.
+    pos: int
+        The position of the character to be inserted.
+    characters: str
+        The characters that would be inserted in `string`.
+
+    Returns
+    -------
+    new_string: str
+        string with inserted character.
+
+    Examples
+    --------
+    Inserts "happy" into "happy birthday" at the sixth index.
+
+    >>> str_insert("happy birthday", 6, "happy")
+    happy happyday
+    """
+    new_string = ""
+    for index, char in enumerate(string):
+        if len(new_string) > index:
+            continue
+        if index == pos:
+            new_string += characters
+            continue
+        new_string += char
+    return new_string
+
+
 def random_password_generator(num_of_characters: int = 8) -> str:
     """Creates a password of eight or more characters.
 
     Parameters
     ----------
     num_of_characters: int, default = 8
-        The number of characters of the password.
+        The number of characters for the password.
 
     Returns
     -------
@@ -56,23 +93,16 @@ def random_password_generator_known_words(keyword: str, num_of_characters: int =
 
     Example
     -------
-    Generates a password of
+    Generates a password of 8 characters with "hey" in it.
 
     >>> random_password_generator_known_words("hey", 8)
     4>heyb=w
 
     """
-    password_known = ""
     password = random_password_generator(num_of_characters)
     index_limit = len(password) - len(keyword)  # the num of characters that won't raise the IndexError
-    keyword_index = np.random.randint(index_limit + 1)
-    for index, char in enumerate(password):
-        if len(password_known) > index:  #
-            continue
-        if index == keyword_index:
-            password_known += keyword
-        password_known += char
-    return password_known
+    keyword_pos = np.random.randint(index_limit + 1)
+    return str_insert(password, keyword_pos, keyword)
 
 
 def main() -> None:
@@ -81,6 +111,7 @@ def main() -> None:
     # print(f"Your New Password is {password}")
     print(f"Your New Password is {password}" if password else "")
     print(f"Your New Known Password is {password_known}" if password else "")
+    print(str_insert("happy birthday", 6, "happy"))
 
 
 if __name__ == "__main__":
